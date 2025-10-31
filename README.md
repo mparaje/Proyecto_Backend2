@@ -62,14 +62,13 @@ JWT_SECRET = 12PK4F11R7J13P
 ```bash
 npm start
 ```
-```
 
-### Login
+## Login
 - Validación de formato de email
 - Mensajes de error personalizados
 - Mensaje de éxito al registrarse
 
-### Perfil de Usuario
+## Perfil de Usuario
 - Información del usuario
 - ID de carrito asociado
 - Contador de productos (preparado)
