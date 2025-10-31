@@ -1,0 +1,14 @@
+<section class="profile-container">
+  <h2>Perfil de usuario</h2>
+
+  <div class="profile-card">
+    <p><strong>Nombre:</strong> {{user.first_name}} {{user.last_name}}</p>
+    <p><strong>Email:</strong> {{user.email}}</p>
+    <p><strong>ID de Carrito:</strong> {{user.cartId}}</p>
+    <p><strong>Productos en carrito:</strong> {{user.cartItemsCount}}</p>
+  </div>
+
+  <form action="/api/sessions/logout" method="POST">
+    <button type="submit" class="logout-btn">Cerrar sesión</button>
+  </form>
+</section>

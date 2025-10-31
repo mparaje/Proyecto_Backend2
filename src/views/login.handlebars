@@ -1,0 +1,37 @@
+<section class="auth-container">
+  <h2>Iniciar sesión</h2>
+
+  {{#if registerSuccess}}
+    <div class="success-message">✓ Usuario registrado con éxito. Ya podés iniciar sesión</div>
+  {{/if}}
+
+  {{#if logoutSuccess}}
+    <div class="success-message">✓ Sesión cerrada correctamente</div>
+  {{/if}}
+
+  {{#if error}}
+    <div class="error-message">{{error}}</div>
+  {{/if}}
+
+  <form action="/api/sessions/login" method="POST" class="auth-form">
+    <input
+      type="email"
+      name="email"
+      placeholder="Correo electrónico"
+      required
+      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+      title="Ingresá un email válido"
+    />
+    <input
+      type="password"
+      name="password"
+      placeholder="Contraseña"
+      required
+      minlength="6"
+    />
+    <button type="submit">Ingresar</button>
+  </form>
+
+  <p>¿No tenés cuenta? <a href="/register">Registrate</a></p>
+  <p><a href="/recupero">¿Olvidaste tu contraseña?</a></p>
+</section>

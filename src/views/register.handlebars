@@ -1,0 +1,13 @@
+<section class="auth-container">
+  <h2>Crear cuenta</h2>
+  <form action="/api/sessions/register" method="POST" class="auth-form">
+    <input type="text" name="first_name" placeholder="Nombre" required minlength="2"/>
+    <input type="text" name="last_name" placeholder="Apellido" required minlength="2"/>
+    <input type="number" name="age" placeholder="Edad" required min="15" max="120"/>
+    <input type="email" name="email" placeholder="Correo electrónico" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Ingresá un email válido (ejemplo@correo.com)"/>
+    <input type="password" name="password" placeholder="Contraseña (mínimo 6 caracteres)" required minlength="6"/>
+    <button type="submit">Registrarme</button>
+  </form>
+
+  <p>¿Ya tenés cuenta? <a href="/login">Iniciar sesión</a></p>
+</section>
