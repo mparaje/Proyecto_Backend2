@@ -31,7 +31,8 @@ router.get("/register", (req, res) => {
 router.get("/login", (req, res) => {
   const logoutSuccess = req.query.logout === "success"
   const registerSuccess = req.query.register === "success";
-  res.render("login", {logoutSuccess, registerSuccess});
+  const recuperoSuccess = req.query.recupero === "success";
+  res.render("login", {logoutSuccess, registerSuccess, recuperoSuccess});
 });
 
 // vista perfil autenticado y su carrito

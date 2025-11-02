@@ -2,11 +2,15 @@
   <h2>Iniciar sesión</h2>
 
   {{#if registerSuccess}}
-    <div class="success-message">✓ Usuario registrado con éxito. Ya podés iniciar sesión</div>
+    <div class="success-message">Usuario registrado con éxito. Ya podés iniciar sesión</div>
+  {{/if}}
+
+  {{#if recuperoSuccess}}
+    <div class="success-message">Contraseña actualizada con éxito</div>
   {{/if}}
 
   {{#if logoutSuccess}}
-    <div class="success-message">✓ Sesión cerrada correctamente</div>
+    <div class="success-message">Sesión cerrada correctamente</div>
   {{/if}}
 
   {{#if error}}

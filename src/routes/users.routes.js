@@ -81,7 +81,7 @@ router.post("/recupero", async (req, res) => {
     user.password = hashPassword(password);
     await user.save();
 
-    res.redirect("/login");
+    res.redirect("/login?recupero=success");
   } catch (error) {
     res.status(500).json({
       message: "Error al recuperar la contraseña",
