@@ -1,3 +1,7 @@
-PORT = 8080
+PORT = 3000
 MONGO_URL = mongodb+srv://maiaparaje_db_user:Paraje25@ecommerce.cstd689.mongodb.net/
 JWT_SECRET = 12PK4F11R7J13P
+
+GMAIL_USER= mail
+GMAIL_PASS= clave app gmail
+BASE_URL= http://localhost:3000

@@ -27,11 +27,20 @@ const userSchema = new mongoose.Schema({
   cart: {
     type: mongoose.Schema.Types.ObjectId,
     ref:"carts",
+    default: null,
   },
   role: {
     type: String,
     enum: ["user", "admin"],
     default: "user",
+  },
+  passwordResetToken:{
+    type: String,
+    default: null,
+  }, 
+  passwordResetExpires:{
+    type: Date,
+    default: null
   }
 },{
   timestamps: true,

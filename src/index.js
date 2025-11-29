@@ -1,10 +1,13 @@
 import express from "express";
-import { engine } from "express-handlebars";
+//import { engine } from "express-handlebars";
 import { join, __dirname } from "./utils/index.js";
 import cookieParser from "cookie-parser";
 
 import userRoutes from "./routes/users.routes.js";
-import viewRoutes from "./routes/views.routes.js";
+//import viewRoutes from "./routes/views.routes.js";
+import productRoutes from "./routes/products.routes.js";
+import cartRoutes from "./routes/carts.routes.js";
+import ticketRoutes from "./routes/tickets.routes.js";
 
 import passport from "passport";
 import initializePassport from "./config/passport.config.js";
@@ -15,13 +18,15 @@ import envs from "./config/envs.js";
 const app = express();
 
 app.set("PORT", envs.port || 3000);
+/*
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
-app.set("views", join(__dirname, "views"));
+app.set("views", join(__dirname, "views"));*/
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(join(__dirname, "public")));
+
+//app.use(express.static(join(__dirname, "public")));
 app.use(cookieParser());
 
 
@@ -30,12 +35,19 @@ app.use(passport.initialize());
 
 
 app.get("/", (req, res) => {
-  res.render("home", { title: "HOME" });
+  res.json({ status: "ok", message: "API Running" });
 });
 
-app.use("/api/sessions", userRoutes);
-app.use("/", viewRoutes);
+//Rutas API
 
+app.use("/api/sessions", userRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/carts", cartRoutes);
+app.use("/api/tickets", ticketRoutes);
+
+//Rutas de vistas
+
+//app.use("/", viewRoutes);
 
 connectDb(envs.mongodb_url);
 
