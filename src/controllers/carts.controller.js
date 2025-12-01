@@ -87,6 +87,13 @@ class CartsController {
 
       if (!cart) return res.status(404).json({ error: "Carrito no encontrado" });
 
+      if (!cart.products || cart.products.length === 0) {
+        return res.status(400).json({
+          status: "error",
+          message: "No se puede realizar la compra. El carrito está vacío."
+        });
+      }
+
       let total = 0;
 
       for (const item of cart.products) {
@@ -94,7 +101,14 @@ class CartsController {
       }
 
       // Crear ticket
-      const ticket = await ticketRepository.purchase(userEmail, total);
+      const ticket = await ticketRepository.purchase(
+        userEmail, 
+        total, 
+        cart.products.map(p => ({
+          productId: p.product._id || p.product,
+          quantity: p.quantity,
+          unitPrice: p.product.price
+      })));
 
       // Vaciar carrito
       await cartRepository.emptyCart(cid);

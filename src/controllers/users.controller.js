@@ -13,7 +13,10 @@ class UserController {
 
       const exist = await userRepository.getUserByEmail(email);
       if (exist)
-        return res.status(400).json({ message: "El email ingresado ya esta registrado" });
+        return res.status(400).json({ 
+          status: "error",
+          message: "El email ingresado ya esta registrado" 
+        });
 
       const newUser = await userRepository.createUser({
         first_name,
@@ -25,11 +28,14 @@ class UserController {
 
       return res.status(201).json({
         status: "success",
-        message: "User registrado correctamente", 
+        message: "Usuario registrado correctamente", 
         newUser
       });
+
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      res.status(500).json({ 
+        status: "error",
+        message: error.message });
     }
   }
 
@@ -40,10 +46,16 @@ class UserController {
 
       const user = await userRepository.getUserByEmail(email);
       if (!user)
-        return res.status(404).json({ message: "Usuario no encontrado" });
+        return res.status(404).json({ 
+          status: "error",
+          message: "Usuario no encontrado" 
+        });
 
       if (!isValidPassword(password, user.password))
-        return res.status(401).json({ message: "Credenciales incorrectas" });
+        return res.status(401).json({ 
+          status: "error",
+          message: "Credenciales incorrectas" 
+        });
 
       const token = createToken(
         {
@@ -58,10 +70,18 @@ class UserController {
 
       res.cookie("authCookie", token, { httpOnly: true, maxAge: 3600000 });
 
-      return res.status(200).json({status: "success", message: "Usuario logueado correctamente", user, token});
+      return res.status(200).json({
+        status: "success", 
+        message: "Usuario logueado correctamente", 
+        user, 
+        token
+      });
 
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      res.status(500).json({ 
+        status: "error",
+        message: error.message 
+      });
     }
   }
 
@@ -71,16 +91,25 @@ class UserController {
       const dto = new UserDTO(req.user);
       res.json(dto);
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      res.status(500).json({ 
+        status: "error",
+        message: error.message 
+      });
     }
   }
+
+  // RESET DE PASSWORD
 
   async forgotPassword(req, res) {
     try {
       const { email } = req.body;
 
       const user = await userRepository.getUserByEmail(email);
-      if (!user) return res.status(404).json({ message: "Email no encontrado" });
+
+      if (!user) return res.status(404).json({ 
+        status: "error",
+        message: "Email no encontrado" 
+      });
 
       const token = crypto.randomBytes(20).toString("hex")
 
@@ -90,9 +119,16 @@ class UserController {
 
       await sendRecoveryEmail(email, token);
 
-      return res.status(200).json({status: "success", message: "Se envio el mail correctamente",});
+      return res.status(200).json({
+        status: "success", 
+        message: "Se envio el mail correctamente"
+      });
+
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      res.status(500).json({
+        status: "error",
+        message: error.message 
+      });
     }
   }
 
@@ -104,30 +140,44 @@ class UserController {
       const user = await userRepository.getUserByResetToken(token);
 
       if (!user)
-        return res
-          .status(400)
-          .json({ message: "El enlace es inválido o expiró" });
+        return res.status(400).json({ 
+          status: "error",
+          message: "El enlace es inválido o expiró" 
+        });
 
       const isSame = isValidPassword(password, user.password);
       if (isSame)
-        return res
-          .status(400)
-          .json({ message: "La nueva contraseña no puede ser igual a la anterior" });
+        return res.status(400).json({ 
+          status: "error",
+          message: "La nueva contraseña no puede ser igual a la anterior" 
+        });
 
       const hashedPass = hashPassword(password);
 
       await userRepository.updatePassword(user._id, hashedPass);
 
-      return res.status(200).json({message: "Se restablecio la contraseña correctamente"});
+      return res.status(200).json({
+        status: "success",
+        message: "Se restablecio la contraseña correctamente"
+      });
+
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      res.status(500).json({ 
+        status: "error",
+        message: error.message 
+      });
     }
   }
+
+  // LOGOUT
 
   async logout (req,res)
   {
     res.clearCookie("authCookie");
-    res.status(200).json({message: "Se cerró sesión correctamente"})
+    res.status(200).json({
+      status: "success",
+      message: "Se cerró sesión correctamente"
+    })
   }
 }
 
